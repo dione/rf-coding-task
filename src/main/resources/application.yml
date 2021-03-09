@@ -1,0 +1,19 @@
+domain: http://localhost:8080
+quarkus:
+  container-image:
+    image: rumblefish/url-shrinker
+    build: true
+  datasource:
+    jdbc:
+      url: jdbc:postgresql://db:5432/urlshort
+    db-kind: postgresql
+    username: u_urlshort
+    password: p_urlshort
+  flyway:
+    migrate-at-start: true
+
+"%dev":
+  quarkus:
+    datasource:
+      jdbc:
+        url: jdbc:postgresql://localhost:5432/urlshort

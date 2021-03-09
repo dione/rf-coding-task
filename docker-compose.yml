@@ -1,0 +1,10 @@
+version: '3.7'
+services:
+  db:
+    image: postgres:13
+    environment:
+      - POSTGRES_USER=u_urlshort
+      - POSTGRES_PASSWORD=p_urlshort
+      - POSTGRES_DB=urlshort
+    ports:
+      - 5432:5432

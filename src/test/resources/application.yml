@@ -1,0 +1,11 @@
+domain: http://localhost:8080
+quarkus:
+  datasource:
+    jdbc:
+      url: jdbc:postgresql://localhost:5432/urlshort
+    db-kind: postgresql
+    username: u_urlshort
+    password: p_urlshort
+  flyway:
+    migrate-at-start: true
+

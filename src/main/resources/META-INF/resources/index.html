@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.28/dist/themes/base.css"
+          rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.28/dist/all.shoelace.js"
+            type="module"></script>
+    <meta charset="UTF-8">
+    <title>rumblefish - UrlShrinker</title>
+    <style>
+        #box {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            min-height: 90vh;
+        }
+
+        #box sl-input {
+            margin-bottom: 1em;
+            width: 80vh;
+        }
+
+        #box sl-input[invalid]::part(help-text) {
+            color: red;
+        }
+
+        #box #drop {
+            margin: 1em;
+        }
+    </style>
+    <script>
+        function copyLink() {
+            const value = document.querySelector("#shortUrl").href;
+            const tempInput = document.createElement("input");
+            tempInput.value = value;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            document.querySelector("sl-form")
+                .addEventListener("sl-submit", async (event) => {
+                    const originalUrl = event.detail.formData.get("url")
+
+                    const params = new URLSearchParams({originalUrl})
+                    const resp = await fetch(`api/links/create?${params}`, {
+                        method: "POST"
+                    })
+                    if (resp.ok) {
+                        const json = await resp.json();
+                        document.querySelector("#drop").innerHTML = `
+Your short link: <a id="shortUrl" href=${json.shortUrl}>${json.shortUrl}</a>
+<sl-tooltip content="Copy link to clipboard">
+    <sl-icon-button label="Copy link to clipboard" name="clipboard" onclick="copyLink()"></sl-icon-button>
+</sl-tooltip>
+`;
+                    } else {
+                        document.querySelector("#drop").innerHTML = 'Something went wrong. Please try again later'
+                    }
+                })
+        })
+    </script>
+</head>
+<body>
+<div id="box">
+    <h1>
+        UrlShortener
+    </h1>
+    <sl-form>
+        <sl-input name="url" pattern="https?://.*" placeholder="https://example.com" required type="url">
+            <small slot="help-text">Please enter valid url</small>
+        </sl-input>
+        <sl-button submit type="primary">ShortenMe</sl-button>
+    </sl-form>
+    <div id="drop"></div>
+</div>
+</body>
+</html>
