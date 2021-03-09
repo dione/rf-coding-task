@@ -1,0 +1,11 @@
+# Requirements
+- java
+- docker and docker-compose
+- internet access
+
+# Info
+App should be available at http://localhost:8080
+
+In this project I have use Quarkus - I never used it before but wanted to try it out.
+
+I wanted to use Apache Ignite as persistence layer at first but I have a problem with correctly injecting database client to custom cache store.
