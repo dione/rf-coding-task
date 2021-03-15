@@ -1,0 +1,22 @@
+#box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 90vh;
+}
+
+#box sl-input {
+    margin-bottom: 1em;
+    width: 80vh;
+}
+
+#box sl-input[invalid]::part(help-text) {
+    color: red;
+}
+
+#box #drop {
+    margin: 1em;
+}
+
