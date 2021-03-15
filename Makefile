@@ -7,7 +7,7 @@
 # anything else that needs to happen before your server is started
 # for the first time
 setup:
-	./gradlew build -x test
+	./backend/gradlew -p backend build -x test
 
 # `make server` will be used after `make setup` in order to start
 # an http server process that listens on any unreserved port
@@ -18,4 +18,4 @@ server:
 # `make test` will be used after `make setup` in order to run
 # your test suite.
 test:
-	./gradlew test
+	./backend/gradlew -p backend test
